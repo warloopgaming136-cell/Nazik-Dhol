@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | Nazik Dhol</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23d4af37%22/></svg>">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="page-loader"><svg class="loader-drum" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="44" fill="none" stroke="#d4af37" stroke-width="4" stroke-dasharray="180 100" stroke-linecap="round"/></svg></div>
+
+<div id="site-header"></div>
+
+<div class="auth-wrap">
+  <div style="width:100%; max-width:480px; z-index:1;">
+    <div class="auth-head">
+      <svg class="brand-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="ag2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f3d576"/><stop offset="50%" stop-color="#d4af37"/><stop offset="100%" stop-color="#9c7a1e"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="46" fill="none" stroke="url(#ag2)" stroke-width="3"/>
+        <ellipse cx="50" cy="32" rx="34" ry="12" fill="none" stroke="url(#ag2)" stroke-width="3"/>
+        <ellipse cx="50" cy="68" rx="34" ry="12" fill="none" stroke="url(#ag2)" stroke-width="3"/>
+        <path d="M16 32 L16 68 M84 32 L84 68" stroke="url(#ag2)" stroke-width="3"/>
+      </svg>
+      <h1>Create Your Account</h1>
+      <p>Join Nazik Dhol to track bookings and manage your events</p>
+    </div>
+    <div class="glass-card form-panel" style="z-index: 1; position: relative;">
+
+      <form id="registerForm" autocomplete="off">
+        <div class="form-group floating-group">
+          <input type="text" id="regName" class="form-control" placeholder=" " autocomplete="off" required>
+          <label for="regName">Full Name</label>
+        </div>
+        <div class="form-group floating-group">
+          <input type="email" id="regEmail" class="form-control" placeholder=" " pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="Must be a valid Gmail address ending with @gmail.com (e.g., yourname@gmail.com)" autocomplete="off" required>
+          <label for="regEmail">Gmail Address (@gmail.com)</label>
+          <p id="emailErrorMsg" style="display:none; color:#ff4d4f; font-size:0.78rem; margin:4px 0 0 4px;"></p>
+        </div>
+        <div class="form-group floating-group">
+          <input type="tel" id="regPhone" class="form-control" placeholder=" " pattern="[0-9]{10}" autocomplete="off" required>
+          <label for="regPhone">Phone Number</label>
+        </div>
+        <div class="form-row">
+          <div class="form-group floating-group password-group">
+            <input type="password" id="regPassword" class="form-control" placeholder=" " autocomplete="new-password" required>
+            <label for="regPassword">Password</label>
+            <button type="button" class="password-toggle-btn" aria-label="Toggle password visibility"><i class="fa-solid fa-eye"></i></button>
+            <div class="strength-meter-container" id="strengthMeter">
+              <div class="strength-bar-wrap">
+                <div class="strength-segment segment-1"></div>
+                <div class="strength-segment segment-2"></div>
+                <div class="strength-segment segment-3"></div>
+              </div>
+              <p class="strength-text" id="strengthText"></p>
+            </div>
+          </div>
+          <div class="form-group floating-group password-group">
+            <input type="password" id="regConfirmPassword" class="form-control" placeholder=" " autocomplete="new-password" required>
+            <label for="regConfirmPassword">Confirm Password</label>
+            <button type="button" class="password-toggle-btn" aria-label="Toggle password visibility"><i class="fa-solid fa-eye"></i></button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-4">Create Account <i class="fa-solid fa-arrow-right"></i></button>
+      </form>
+      <p class="text-center mt-2" style="color:var(--muted); font-size:0.88rem;">Already have an account? <a href="/login.html" style="color:var(--gold);">Login here</a></p>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="/js/main.js"></script>
+<script src="/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard | Nazik Dhol</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23d4af37%22/></svg>">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .section-label {
+    font-family:var(--font-heading); font-size:0.72rem; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:20px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .section-label::before { content:''; width:28px; height:2px; background:var(--grad-gold); display:inline-block; }
+  
+  /* Horizontal Tabs styles override */
+  .dashboard-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 16px;
+  }
+  .dashboard-tab {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .dashboard-tab:hover {
+    color: var(--cream);
+    background: rgba(244, 234, 217, 0.04);
+  }
+  .dashboard-tab.active {
+    color: var(--gold);
+    background: rgba(212, 175, 55, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.25);
+  }
+</style>
+</head>
+<body>
+
+<div class="page-loader"><svg class="loader-drum" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="44" fill="none" stroke="#d4af37" stroke-width="4" stroke-dasharray="180 100" stroke-linecap="round"/></svg></div>
+
+<div id="site-header"></div>
+
+<section class="page-hero">
+  <div class="container reveal">
+    <p class="crumb"><a href="/index.html">Home</a> / Dashboard</p>
+    <h1>Client Portal</h1>
+    <p>Track your bookings, edit your profile details, and manage your events.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    
+    <!-- Horizontal Tab Menu -->
+    <div class="dashboard-tabs">
+      <a href="#upcoming" class="dashboard-tab tab-link active" id="tabUpcoming"><i class="fa-solid fa-calendar-check"></i> My Bookings</a>
+      <a href="#profile" class="dashboard-tab tab-link" id="tabProfile"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+      <a href="#" class="dashboard-tab logout-btn" style="color:var(--red-bright);"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+
+    <!-- ======== MY BOOKINGS PANEL ======== -->
+    <div class="panel active" id="upcoming">
+      <div class="glass-card reveal" style="padding:28px; margin-bottom:28px;">
+        <p class="section-label">Upcoming Events</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Code</th><th>Event</th><th>Date & Time</th><th>Venue</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="upcomingBookings"><tr><td colspan="6" class="text-center" style="color:var(--muted);padding:30px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="glass-card reveal" style="padding:28px;">
+        <p class="section-label">All Booking History</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Code</th><th>Event</th><th>Date & Time</th><th>Venue</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="bookingHistory"><tr><td colspan="6" class="text-center" style="color:var(--muted);padding:30px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== PROFILE PANEL ======== -->
+    <div class="panel" id="profile">
+      <div class="glass-card reveal" style="padding:32px; max-width: 700px; margin: 0 auto;">
+        <p class="section-label">Edit Profile</p>
+        <div class="glass-card profile-card" id="profileCard" style="align-items:center; margin-bottom:28px; background: rgba(212,175,55,0.02);"></div>
+        <form id="profileForm">
+          <div class="form-row">
+            <div class="form-group floating-group">
+              <input type="text" id="profileName" class="form-control" placeholder=" " required>
+              <label for="profileName">Full Name</label>
+            </div>
+            <div class="form-group floating-group">
+              <input type="tel" id="profilePhone" class="form-control" placeholder=" " required>
+              <label for="profilePhone">Phone Number</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block mt-4">Save Changes</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="/js/main.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

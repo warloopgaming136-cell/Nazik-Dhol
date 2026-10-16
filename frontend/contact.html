@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | Nazik Dhol</title>
+<meta name="description" content="Get in touch with Nazik Dhol for performance bookings, custom quotes, and enquiries.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23d4af37%22/></svg>">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="page-loader"><svg class="loader-drum" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="44" fill="none" stroke="#d4af37" stroke-width="4" stroke-dasharray="180 100" stroke-linecap="round"/></svg></div>
+
+<div id="site-header"></div>
+
+<section class="page-hero">
+  <div class="container reveal">
+    <p class="crumb"><a href="/index.html">Home</a> / Contact</p>
+    <h1>Get In Touch</h1>
+    <p>Contact our event manager to plan your custom dhol entry.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid-2 reveal" style="gap: 40px;">
+      
+      <!-- Contact Info -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <h2 style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--cream); margin-bottom: 8px;">Let's Talk Dhol</h2>
+        <p style="color: var(--muted); line-height: 1.6; margin-bottom: 12px;">Have specific choreography in mind? Need a customized team size? Send us an inquiry and our event coordinator will call you back within 24 hours.</p>
+        
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <div style="width: 46px; height: 46px; background: rgba(212,175,55,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--gold);"><i class="fa-solid fa-phone"></i></div>
+          <div>
+            <h4 style="font-family: var(--font-heading); margin-bottom: 2px;">Phone Number</h4>
+            <p style="color: var(--muted); font-size: 0.9rem;">+91 6385121495</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <div style="width: 46px; height: 46px; background: rgba(212,175,55,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--gold);"><i class="fa-solid fa-envelope"></i></div>
+          <div>
+            <h4 style="font-family: var(--font-heading); margin-bottom: 2px;">Email Address</h4>
+            <p style="color: var(--muted); font-size: 0.9rem;">warloopgaming136@gmail.com</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <div style="width: 46px; height: 46px; background: rgba(212,175,55,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--gold);"><i class="fa-solid fa-location-dot"></i></div>
+          <div>
+            <h4 style="font-family: var(--font-heading); margin-bottom: 2px;">Office Address</h4>
+            <p style="color: var(--muted); font-size: 0.9rem;">Ambedkar Nagar, Rajapalayam</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inquiry Form -->
+      <div class="glass-card form-panel" style="border: 1px solid var(--glass-border);">
+        <h3 style="font-family: var(--font-heading); margin-bottom: 20px; color: var(--gold);">Send An Inquiry</h3>
+        <form id="contactForm">
+          <div class="form-group floating-group">
+            <input type="text" id="contactName" class="form-control" placeholder=" " required>
+            <label for="contactName">Your Name</label>
+          </div>
+          <div class="form-group floating-group">
+            <input type="email" id="contactEmail" class="form-control" placeholder=" " required>
+            <label for="contactEmail">Email Address</label>
+          </div>
+          <div class="form-group floating-group">
+            <textarea id="contactMessage" class="form-control" placeholder=" " required style="min-height: 100px;"></textarea>
+            <label for="contactMessage">How can we help you?</label>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="/js/main.js"></script>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    toast('Thank you for reaching out! We will contact you soon.', 'success');
+    e.target.reset();
+  });
+</script>
+</body>
+</html>

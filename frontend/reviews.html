@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews & Testimonials | Nazik Dhol</title>
+<meta name="description" content="Read reviews from clients who booked Nazik Dhol for weddings, temple festivals, and corporate events.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23d4af37%22/></svg>">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="page-loader"><svg class="loader-drum" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="44" fill="none" stroke="#d4af37" stroke-width="4" stroke-dasharray="180 100" stroke-linecap="round"/></svg></div>
+
+<div id="site-header"></div>
+
+<section class="page-hero">
+  <div class="container reveal">
+    <p class="crumb"><a href="/index.html">Home</a> / Testimonials</p>
+    <h1>Client Testimonials</h1>
+    <p>Read about the experiences of clients who celebrated with Nazik Dhol.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid-3" id="allReviews"></div>
+
+    <!-- Review Form (Only visible to logged-in customers) -->
+    <div class="glass-card form-panel reveal" id="reviewFormContainer" style="margin-top: 50px; display: none; max-width: 600px;">
+      <h3 style="font-family: var(--font-heading); margin-bottom: 20px; color: var(--gold);"><i class="fa-solid fa-pen-to-square" style="margin-right: 8px;"></i> Write A Review</h3>
+      <form id="publicReviewForm">
+        <div class="form-group floating-group">
+          <select id="revRating" class="form-control" placeholder=" " required style="height: 52px;">
+            <option value="5" selected>&#9733;&#9733;&#9733;&#9733;&#9733; (5 Stars)</option>
+            <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4 Stars)</option>
+            <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3 Stars)</option>
+            <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2 Stars)</option>
+            <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1 Star)</option>
+          </select>
+          <label for="revRating">Rating</label>
+        </div>
+        <div class="form-group floating-group">
+          <textarea id="revComment" class="form-control" placeholder=" " required style="min-height: 120px;"></textarea>
+          <label for="revComment">Your Experience</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Submit Review</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="/js/main.js"></script>
+<script src="/js/content.js"></script>
+<script>
+  // Dynamically load reviews from API database
+  loadReviews('allReviews');
+
+  // Show review writing container if user is authenticated
+  const user = getStoredUser();
+  if (user && user.role === 'user') {
+    const container = document.getElementById('reviewFormContainer');
+    if (container) container.style.display = 'block';
+
+    const form = document.getElementById('publicReviewForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rating = document.getElementById('revRating').value;
+      const comment = document.getElementById('revComment').value.trim();
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+
+      try {
+        await api('/reviews', {
+          method: 'POST',
+          body: { rating: Number(rating), comment }
+        });
+        toast('Thank you! Your review has been submitted for approval.', 'success');
+        form.reset();
+      } catch (err) {
+        toast(err.message, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Submit Review';
+      }
+    });
+  }
+</script>
+</body>
+</html>

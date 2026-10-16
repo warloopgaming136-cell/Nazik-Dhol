@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment variables (CRITICAL: Never commit secrets to GitHub)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+frontend/.env
+
+# Logs & debugging
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Editor & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Credentials & Admin secrets
+*login*.txt
+*LOGIN*.txt
+
+# Archive files & duplicate folders
+*.zip
+Nazik_Dhol_Full_Project/
+
+# Office temp locks
+~$*
+
+# Vercel output
+.vercel
+

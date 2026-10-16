@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Nazik Dhol</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23d4af37%22/></svg>">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="page-loader"><svg class="loader-drum" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="44" fill="none" stroke="#d4af37" stroke-width="4" stroke-dasharray="180 100" stroke-linecap="round"/></svg></div>
+
+<div class="dashboard-shell">
+  <aside class="dash-sidebar" id="dashSidebar">
+    <a href="/index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="dg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f3d576"/><stop offset="50%" stop-color="#d4af37"/><stop offset="100%" stop-color="#9c7a1e"/></linearGradient></defs><circle cx="50" cy="50" r="46" fill="none" stroke="url(#dg2)" stroke-width="3"/><ellipse cx="50" cy="32" rx="34" ry="12" fill="none" stroke="url(#dg2)" stroke-width="3"/><ellipse cx="50" cy="68" rx="34" ry="12" fill="none" stroke="url(#dg2)" stroke-width="3"/></svg>
+      <div class="brand-text"><span class="name">Nazik Dhol</span><span class="tag">Admin Panel</span></div>
+    </a>
+    <nav class="dash-nav">
+      <a href="#" data-tab="overview" class="active"><i class="fa-solid fa-gauge-high"></i> Overview</a>
+      <a href="#" data-tab="bookings"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>
+      <a href="#" data-tab="dates"><i class="fa-solid fa-calendar-days"></i> Calendar</a>
+      <div class="divider"></div>
+      <a href="#" data-tab="services"><i class="fa-solid fa-drum"></i> Manage Services</a>
+      <a href="#" data-tab="packages"><i class="fa-solid fa-gift"></i> Manage Packages</a>
+      <a href="#" data-tab="team"><i class="fa-solid fa-user-group"></i> Manage Team</a>
+      <a href="#" data-tab="gallery"><i class="fa-solid fa-images"></i> Manage Gallery</a>
+      <a href="#" data-tab="videos"><i class="fa-solid fa-video"></i> Manage Videos</a>
+      <a href="#" data-tab="reviews"><i class="fa-solid fa-star"></i> Manage Reviews</a>
+      <div class="divider"></div>
+      <a href="#" data-tab="users"><i class="fa-solid fa-users"></i> Manage Users</a>
+      <a href="#" data-tab="reports"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <div class="divider"></div>
+      <a href="/index.html"><i class="fa-solid fa-house"></i> Back to Website</a>
+      <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </nav>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <button class="btn-icon" id="sidebarToggle" style="display:none;"><i class="fa-solid fa-bars"></i></button>
+      <div>
+        <h1>Welcome, <span id="adminName">Admin</span></h1>
+        <p>Here's what's happening with Nazik Dhol today.</p>
+      </div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="tab-panel" id="tab-overview">
+      <div class="kpi-grid">
+        <div class="glass-card kpi-card"><div class="kpi-icon gold"><i class="fa-solid fa-calendar-check"></i></div><div><div class="kpi-val" id="kpiTotalBookings">0</div><div class="kpi-label">Total Bookings</div></div></div>
+        <div class="glass-card kpi-card"><div class="kpi-icon red"><i class="fa-solid fa-calendar-day"></i></div><div><div class="kpi-val" id="kpiTodayBookings">0</div><div class="kpi-label">Today's Bookings</div></div></div>
+        <div class="glass-card kpi-card"><div class="kpi-icon green"><i class="fa-solid fa-indian-rupee-sign"></i></div><div><div class="kpi-val" id="kpiRevenue">₹0</div><div class="kpi-label">Revenue</div></div></div>
+        <div class="glass-card kpi-card"><div class="kpi-icon gold"><i class="fa-solid fa-users"></i></div><div><div class="kpi-val" id="kpiCustomers">0</div><div class="kpi-label">Customers</div></div></div>
+      </div>
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-chart-pie" style="color:var(--gold)"></i> Booking Status Breakdown</h3></div>
+        <div id="statusBreakdown"></div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS -->
+    <div class="tab-panel" id="tab-bookings" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head">
+          <h3><i class="fa-solid fa-calendar-check" style="color:var(--gold)"></i> All Bookings</h3>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <input type="text" id="bookingSearch" class="form-control" placeholder="Search name, phone, code..." style="width:220px;">
+            <select id="bookingStatusFilter" class="form-control" style="width:160px;">
+              <option value="">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="accepted">Accepted</option>
+              <option value="rejected">Rejected</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Code</th><th>Customer</th><th>Event</th><th>Date</th><th>Venue</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="bookingsTableBody"><tr><td colspan="7" class="text-center" style="color:var(--muted);padding:30px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="bookingsPagination"></div>
+      </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="tab-panel" id="tab-dates" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-calendar-days" style="color:var(--gold)"></i> Set Date Status</h3></div>
+        <form id="dateForm" class="form-row" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="form-group"><label>Date</label><input type="date" id="dateInput" class="form-control" required></div>
+          <div class="form-group"><label>Status</label>
+            <select id="dateStatus" class="form-control" required>
+              <option value="available">Available</option>
+              <option value="booked">Booked</option>
+              <option value="holiday">Holiday</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Note (optional)</label><input type="text" id="dateNote" class="form-control" placeholder="e.g. Diwali"></div>
+          <div class="form-group full"><button type="submit" class="btn btn-primary">Update Calendar</button></div>
+        </form>
+        <p style="color:var(--muted); font-size:0.85rem;">Dates automatically turn "booked" when a booking is submitted for that day. Use this form to manually block holidays or free up a date.</p>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="tab-panel" id="tab-services" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-drum" style="color:var(--gold)"></i> Manage Services</h3><button class="btn btn-primary btn-sm" onclick="openResourceModal('services')"><i class="fa-solid fa-plus"></i> Add Service</button></div>
+        <div class="table-wrap"><table class="data-table"><thead><tr><th>Title</th><th>Price</th><th>Duration</th><th>Active</th><th>Actions</th></tr></thead><tbody id="servicesTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- PACKAGES -->
+    <div class="tab-panel" id="tab-packages" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-gift" style="color:var(--gold)"></i> Manage Packages</h3><button class="btn btn-primary btn-sm" onclick="openResourceModal('packages')"><i class="fa-solid fa-plus"></i> Add Package</button></div>
+        <div class="table-wrap"><table class="data-table"><thead><tr><th>Name</th><th>Price</th><th>Members</th><th>Popular</th><th>Actions</th></tr></thead><tbody id="packagesTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="tab-panel" id="tab-team" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-user-group" style="color:var(--gold)"></i> Manage Team</h3><button class="btn btn-primary btn-sm" onclick="openResourceModal('team')"><i class="fa-solid fa-plus"></i> Add Member</button></div>
+        <div class="table-wrap"><table class="data-table"><thead><tr><th>Name</th><th>Role</th><th>Experience</th><th>Phone</th><th>Actions</th></tr></thead><tbody id="teamTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="tab-panel" id="tab-gallery" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-images" style="color:var(--gold)"></i> Manage Gallery</h3><button class="btn btn-primary btn-sm" onclick="openResourceModal('gallery')"><i class="fa-solid fa-plus"></i> Add Photo</button></div>
+        <div class="table-wrap"><table class="data-table"><thead><tr><th>Title</th><th>Category</th><th>Active</th><th>Actions</th></tr></thead><tbody id="galleryTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- VIDEOS -->
+    <div class="tab-panel" id="tab-videos" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-video" style="color:var(--gold)"></i> Manage Videos</h3><button class="btn btn-primary btn-sm" onclick="openResourceModal('videos')"><i class="fa-solid fa-plus"></i> Add Video</button></div>
+        <div class="table-wrap"><table class="data-table"><thead><tr><th>Title</th><th>Category</th><th>YouTube ID</th><th>Actions</th></tr></thead><tbody id="videosTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="tab-panel" id="tab-reviews" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-star" style="color:var(--gold)"></i> Manage Reviews</h3></div>
+        <div class="table-wrap"><table class="data-table"><thead><tr><th>Customer</th><th>Rating</th><th>Comment</th><th>Status</th><th>Actions</th></tr></thead><tbody id="reviewsTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="tab-panel" id="tab-users" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-users" style="color:var(--gold)"></i> Manage Users</h3></div>
+        <div class="table-wrap"><table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead><tbody id="usersTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div class="tab-panel" id="tab-reports" style="display:none;">
+      <div class="glass-card panel">
+        <div class="panel-head"><h3><i class="fa-solid fa-chart-line" style="color:var(--gold)"></i> Reports Summary</h3></div>
+        <p style="color:var(--muted); margin-bottom:16px;">A quick snapshot of platform performance. For detailed exports, use the Manage Bookings tab filters and your browser's print-to-PDF.</p>
+        <div class="kpi-grid">
+          <div class="glass-card kpi-card"><div class="kpi-icon gold"><i class="fa-solid fa-calendar-check"></i></div><div><div class="kpi-val" id="kpiTotalBookings2">—</div><div class="kpi-label">Total Bookings</div></div></div>
+          <div class="glass-card kpi-card"><div class="kpi-icon green"><i class="fa-solid fa-indian-rupee-sign"></i></div><div><div class="kpi-val" id="kpiRevenue2">—</div><div class="kpi-label">Revenue</div></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/main.js"></script>
+<script src="/js/admin.js"></script>
+<style>
+  @media (max-width: 900px) { #sidebarToggle { display:inline-flex !important; } }
+</style>
+</body>
+</html>
