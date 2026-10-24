@@ -690,7 +690,8 @@ select.form-control option:checked {
   z-index: 5;
 }
 .floating-group .form-control:focus ~ label,
-.floating-group .form-control:not(:placeholder-shown) ~ label {
+.floating-group .form-control:not(:placeholder-shown) ~ label,
+.floating-group select.form-control ~ label {
   top: 0;
   font-size: 0.72rem !important;
   color: var(--gold-light);

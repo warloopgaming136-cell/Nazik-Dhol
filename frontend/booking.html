@@ -79,8 +79,51 @@
             <label for="bkDate">Event Date</label>
           </div>
           <div class="form-group floating-group">
-            <input type="text" id="bkTime" class="form-control" placeholder=" " required>
-            <label for="bkTime">Event Time (e.g. 10:00 AM - 1:00 PM)</label>
+            <select id="bkTime" class="form-control" required style="height: 52px;">
+              <option value="" disabled selected hidden></option>
+              <optgroup label="🌅 Morning Sessions">
+                <option value="06:00 AM - 09:00 AM">06:00 AM - 09:00 AM (Early Muhurtham / Procession)</option>
+                <option value="08:00 AM - 11:00 AM">08:00 AM - 11:00 AM (Morning Welcome / Pooja)</option>
+                <option value="09:00 AM - 12:00 PM">09:00 AM - 12:00 PM (Temple Festival / Opening)</option>
+                <option value="10:00 AM - 01:00 PM">10:00 AM - 01:00 PM (Mid-Day Grand Entry)</option>
+              </optgroup>
+              <optgroup label="☀️ Afternoon Sessions">
+                <option value="12:00 PM - 03:00 PM">12:00 PM - 03:00 PM (Lunch Reception / Function)</option>
+                <option value="03:00 PM - 06:00 PM">03:00 PM - 06:00 PM (Afternoon Welcome Beats)</option>
+              </optgroup>
+              <optgroup label="🌙 Prime Evening & Night Gala">
+                <option value="05:00 PM - 08:00 PM">05:00 PM - 08:00 PM (Evening Baraat Entry)</option>
+                <option value="06:00 PM - 09:00 PM">06:00 PM - 09:00 PM (Prime Reception Celebration)</option>
+                <option value="07:00 PM - 10:00 PM">07:00 PM - 10:00 PM (Dinner & Stage Welcome)</option>
+                <option value="08:00 PM - 11:00 PM">08:00 PM - 11:00 PM (Night Celebration / DJ Fusion)</option>
+                <option value="09:00 PM - 12:00 AM">09:00 PM - 12:00 AM (Midnight Sangeet / DJ Night)</option>
+              </optgroup>
+              <optgroup label="✨ Special & Custom">
+                <option value="Full Day (Flexible Hours)">Full Day Performance (Flexible Timing)</option>
+                <option value="custom">Custom Time (Pick Specific Hours)...</option>
+              </optgroup>
+            </select>
+            <label for="bkTime">Event Time Slot</label>
+          </div>
+        </div>
+
+        <!-- Custom Time Picker (revealed when 'custom' is selected) -->
+        <div id="customTimeWrapper" style="display: none; margin-top: -10px; margin-bottom: 22px;">
+          <div style="background: rgba(212, 175, 55, 0.05); border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 12px; padding: 14px 18px;">
+            <div style="font-size: 0.78rem; font-family: var(--font-heading); color: var(--gold); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-regular fa-clock"></i> Select Your Custom Start & End Time:
+            </div>
+            <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 140px;">
+                <label style="font-size: 0.72rem; color: var(--muted); display: block; margin-bottom: 4px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.06em;">Start Time</label>
+                <input type="time" id="bkStartTime" class="form-control" style="height: 46px;">
+              </div>
+              <span style="color: var(--gold); font-weight: 700; padding-top: 18px;">to</span>
+              <div style="flex: 1; min-width: 140px;">
+                <label style="font-size: 0.72rem; color: var(--muted); display: block; margin-bottom: 4px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.06em;">End Time</label>
+                <input type="time" id="bkEndTime" class="form-control" style="height: 46px;">
+              </div>
+            </div>
           </div>
         </div>
 
@@ -137,8 +180,46 @@
       
       serviceSelect.innerHTML = servicesRes.data.map(s => `<option value="${s.title}">${s.title}</option>`).join('');
       packageSelect.innerHTML = packagesRes.data.map(p => `<option value="${p._id}" data-name="${p.name}">${p.name} — ₹${p.price.toLocaleString()}</option>`).join('');
+
+      // Pre-select from query params (e.g. ?service=Wedding)
+      const urlParams = new URLSearchParams(window.location.search);
+      const preService = urlParams.get('service');
+      if (preService && serviceSelect.querySelector(`option[value="${preService}"]`)) {
+        serviceSelect.value = preService;
+      }
+      const prePackage = urlParams.get('package');
+      if (prePackage && packageSelect.querySelector(`option[value="${prePackage}"]`)) {
+        packageSelect.value = prePackage;
+      }
     } catch (e) {
       toast('Failed to load list details: ' + e.message, 'error');
+    }
+
+    // Time slot toggle for custom slot
+    const timeSelect = document.getElementById('bkTime');
+    const customTimeWrapper = document.getElementById('customTimeWrapper');
+    const startTimeInput = document.getElementById('bkStartTime');
+    const endTimeInput = document.getElementById('bkEndTime');
+
+    timeSelect.addEventListener('change', () => {
+      if (timeSelect.value === 'custom') {
+        customTimeWrapper.style.display = 'block';
+        startTimeInput.required = true;
+        endTimeInput.required = true;
+      } else {
+        customTimeWrapper.style.display = 'none';
+        startTimeInput.required = false;
+        endTimeInput.required = false;
+      }
+    });
+
+    function formatTime12(timeStr) {
+      if (!timeStr) return '';
+      const [h, m] = timeStr.split(':').map(Number);
+      const period = h >= 12 ? 'PM' : 'AM';
+      const hours12 = h % 12 || 12;
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${pad(hours12)}:${pad(m)} ${period}`;
     }
     
     // Submit handler
@@ -147,6 +228,17 @@
       e.preventDefault();
       const submitBtn = document.getElementById('bkSubmitBtn');
       
+      let eventTimeVal = timeSelect.value;
+      if (eventTimeVal === 'custom') {
+        const startVal = startTimeInput.value;
+        const endVal = endTimeInput.value;
+        if (!startVal || !endVal) {
+          toast('Please choose both start time and end time for your custom slot.', 'error');
+          return;
+        }
+        eventTimeVal = `${formatTime12(startVal)} - ${formatTime12(endVal)}`;
+      }
+
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
       
@@ -158,7 +250,7 @@
           address:             document.getElementById('bkAddress').value.trim(),
           eventType:           serviceSelect.value,
           eventDate:           document.getElementById('bkDate').value,
-          eventTime:           document.getElementById('bkTime').value.trim(),
+          eventTime:           eventTimeVal,
           venue:               document.getElementById('bkVenue').value.trim(),
           package:             packageSelect.value || undefined,
           packageName:         packageSelect.selectedOptions[0]?.dataset.name || '',

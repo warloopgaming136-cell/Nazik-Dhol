@@ -38,3 +38,6 @@ Nazik_Dhol_Full_Project/
 # Vercel output
 .vercel
 
+
+.vercel
+.env*
